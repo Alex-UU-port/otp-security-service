@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'alexuuport'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // PostgreSQL JDBC
+    implementation 'org.postgresql:postgresql:42.7.1'
+
+    // JWT для аутентификации
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    // Email
+    implementation 'org.eclipse.angus:angus-mail:2.0.5'
+
+    // SMS (SMPP)
+    implementation 'org.jsmpp:jsmpp:3.0.1'
+
+    // Логирование
+    implementation 'org.slf4j:slf4j-simple:2.0.9'
+
+    // JSON обработка
+    implementation 'com.google.code.gson:gson:2.10.1'
+}
+
+application {
+    mainClass = 'com.otp.server.HttpServer'
+}
+
+compileJava.options.encoding = 'UTF-8'
