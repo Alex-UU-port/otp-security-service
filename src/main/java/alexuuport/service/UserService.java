@@ -1,10 +1,10 @@
 package alexuuport.service;
 
-import com.otp.dao.UserDao;
-import com.otp.dao.OtpCodeDao;
-import com.otp.model.User;
-import com.otp.util.PasswordUtil;
-import com.otp.util.LoggerUtil;
+import alexuuport.dao.UserDao;
+import alexuuport.dao.OtpCodeDao;
+import alexuuport.model.User;
+import alexuuport.util.PasswordUtil;
+import alexuuport.util.LoggerUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;

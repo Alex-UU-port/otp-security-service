@@ -1,10 +1,10 @@
 package alexuuport.service;
 
-import com.otp.dao.OtpCodeDao;
-import com.otp.dao.OtpConfigDao;
-import com.otp.model.OtpCode;
-import com.otp.model.OtpConfig;
-import com.otp.model.OtpStatus;
+import alexuuport.dao.OtpCodeDao;
+import alexuuport.dao.OtpConfigDao;
+import alexuuport.model.OtpCode;
+import alexuuport.model.OtpConfig;
+import alexuuport.model.OtpStatus;
 import java.security.SecureRandom;
 import java.time.Instant;
 import java.util.UUID;

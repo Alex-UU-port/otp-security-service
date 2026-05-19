@@ -1,6 +1,6 @@
 package alexuuport.dao;
 
-import com.otp.model.User;
+import alexuuport.model.User;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

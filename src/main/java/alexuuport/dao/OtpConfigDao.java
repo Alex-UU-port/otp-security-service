@@ -1,6 +1,6 @@
 package alexuuport.dao;
 
-import com.otp.model.OtpConfig;
+import alexuuport.model.OtpConfig;
 import java.sql.*;
 
 public class OtpConfigDao {

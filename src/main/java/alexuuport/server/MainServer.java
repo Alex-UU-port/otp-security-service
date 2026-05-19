@@ -1,4 +1,4 @@
-package com.otp.server;
+package alexuuport.server;
 
 import alexuuport.scheduler.OtpExpiryScheduler;
 import alexuuport.server.handlers.AdminHandler;
@@ -90,7 +90,7 @@ public class  MainServer {
         });
 
         // Запускаем планировщик для проверки просроченных кодов
-        com.otp.dao.OtpCodeDao otpCodeDao = new com.otp.dao.OtpCodeDao(connection);
+        alexuuport.dao.OtpCodeDao otpCodeDao = new alexuuport.dao.OtpCodeDao(connection);
         scheduler = new OtpExpiryScheduler(otpCodeDao);
         scheduler.start();
         logger.info("Планировщик проверки просроченных кодов запущен");

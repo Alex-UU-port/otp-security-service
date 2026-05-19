@@ -1,6 +1,6 @@
 package alexuuport.scheduler;
 
-import com.otp.dao.OtpCodeDao;
+import alexuuport.dao.OtpCodeDao;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;

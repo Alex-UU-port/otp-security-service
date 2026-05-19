@@ -1,7 +1,7 @@
 package alexuuport.dao;
 
-import com.otp.model.OtpCode;
-import com.otp.model.OtpStatus;
+import alexuuport.model.OtpCode;
+import alexuuport.model.OtpStatus;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

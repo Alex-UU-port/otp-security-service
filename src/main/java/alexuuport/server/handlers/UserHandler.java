@@ -78,7 +78,7 @@ public class UserHandler implements HttpHandler {
 
         // Создаем сервисы
         OtpCodeDao otpCodeDao = new OtpCodeDao(connection);
-        com.otp.dao.OtpConfigDao otpConfigDao = new com.otp.dao.OtpConfigDao(connection);
+        alexuuport.dao.OtpConfigDao otpConfigDao = new alexuuport.dao.OtpConfigDao(connection);
         OtpService otpService = new OtpService(otpCodeDao, otpConfigDao);
 
         // Генерируем OTP код
@@ -125,7 +125,7 @@ public class UserHandler implements HttpHandler {
         String code = json.get("code").getAsString();
 
         OtpCodeDao otpCodeDao = new OtpCodeDao(connection);
-        com.otp.dao.OtpConfigDao otpConfigDao = new com.otp.dao.OtpConfigDao(connection);
+        alexuuport.dao.OtpConfigDao otpConfigDao = new alexuuport.dao.OtpConfigDao(connection);
         OtpService otpService = new OtpService(otpCodeDao, otpConfigDao);
 
         boolean isValid = otpService.validateCode(operationId, code);

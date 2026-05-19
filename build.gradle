@@ -33,7 +33,7 @@ dependencies {
 }
 
 application {
-    mainClass = 'com.otp.server.HttpServer'
+    mainClass = 'alexuuport.server.MainServer'
 }
 
 compileJava.options.encoding = 'UTF-8'
