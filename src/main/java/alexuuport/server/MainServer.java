@@ -14,7 +14,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
-public class HttpServer {
+public class  MainServer {
     private static final int PORT = 8080;
     private static Connection connection;
     private static OtpExpiryScheduler scheduler;
