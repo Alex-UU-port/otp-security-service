@@ -2,11 +2,11 @@ package alexuuport.server.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.otp.dao.OtpConfigDao;
-import com.otp.dao.UserDao;
-import com.otp.model.OtpConfig;
-import com.otp.model.User;
-import com.otp.util.JwtUtil;
+import alexuuport.dao.OtpConfigDao;
+import alexuuport.dao.UserDao;
+import alexuuport.model.OtpConfig;
+import alexuuport.model.User;
+import alexuuport.util.JwtUtil;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 

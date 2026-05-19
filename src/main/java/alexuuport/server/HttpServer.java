@@ -1,10 +1,10 @@
 package com.otp.server;
 
-import com.otp.scheduler.OtpExpiryScheduler;
-import com.otp.server.handlers.AdminHandler;
-import com.otp.server.handlers.AuthHandler;
-import com.otp.server.handlers.UserHandler;
-import com.otp.util.LoggerUtil;
+import alexuuport.scheduler.OtpExpiryScheduler;
+import alexuuport.server.handlers.AdminHandler;
+import alexuuport.server.handlers.AuthHandler;
+import alexuuport.server.handlers.UserHandler;
+import alexuuport.util.LoggerUtil;
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.File;
@@ -30,8 +30,8 @@ public class HttpServer {
 
         // Подключаемся к базе данных
         String url = "jdbc:postgresql://localhost:5432/otp_service";
-        String user = "postgres";
-        String password = "postgres";
+        String user = "admin";
+        String password = "admin123";
 
         try {
             connection = DriverManager.getConnection(url, user, password);

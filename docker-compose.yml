@@ -2,36 +2,45 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgres:17-alpine
-    container_name: postgres_db_17
+    image: postgres:17-alpine  # Лёгкий образ PostgreSQL на Alpine Linux
+    container_name: postgres_server  # Имя контейнера
+
+    restart: unless-stopped  # Автоматический перезапуск (кроме явной остановки)
+
     environment:
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
-      POSTGRES_DB: postgres
-      PGDATA: /var/lib/postgresql/data/pgdata
-    ports:
-      - "5432:5432"
+      # Основные настройки доступа
+      POSTGRES_USER: admin  # Имя пользователя администратора
+      POSTGRES_PASSWORD: admin123  # Пароль администратора
+      POSTGRES_DB: postgres  # Стандартная системная БД (создаётся по умолчанию)
+
+      # Дополнительные настройки (опционально)
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"  # Кодировка UTF-8
+      TZ: "UTC"  # Временная зона
+
     volumes:
+      # Постоянное хранилище данных (чтобы БД не сбрасывалась при перезапуске)
       - postgres_data:/var/lib/postgresql/data
-      - ./init-scripts:/docker-entrypoint-initdb.d:ro
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U myuser -d bankDB"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
+
+      # Опционально: папка для резервных копий или SQL-скриптов
+      - ./backups:/backups
+
+    ports:
+      - "5432:5432"  # Проброс порта (хост:контейнер)
+
     networks:
       - postgres_network
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
+
+    healthcheck:
+      # Проверка, что PostgreSQL готов к работе
+      test: ["CMD-SHELL", "pg_isready -U admin"]
+      interval: 10s  # Проверяем каждые 10 секунд
+      timeout: 5s    # Таймаут проверки
+      retries: 5     # Количество попыток до пометки как unhealthy
 
 networks:
   postgres_network:
-    driver: bridge
+    driver: bridge  # Изолированная сеть для контейнера
 
 volumes:
   postgres_data:
+    driver: local  # Постоянный том для данных
