@@ -41,3 +41,10 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+email_emulation.json
+email_emulation.log
+otp_codes.txt
+sms_emulation.log
+telegram_emulation.json
+telegram_emulation.log
