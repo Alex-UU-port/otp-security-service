@@ -1,3 +1,7 @@
+
+//На данный момент это лишний класс, все эти функции реализованы в AuthHandler
+
+
 package alexuuport.service;
 
 import alexuuport.dao.UserDao;
@@ -21,16 +25,6 @@ public class UserService {
         this.logger = new LoggerUtil(UserService.class);
     }
 
-    /**
-     * Регистрация нового пользователя
-     * @param username имя пользователя
-     * @param password пароль
-     * @param email email адрес
-     * @param phone номер телефона
-     * @param telegramId Telegram ID
-     * @return зарегистрированный пользователь
-     * @throws Exception если пользователь уже существует или ошибка БД
-     */
     public User registerUser(String username, String password, String email, String phone, String telegramId) throws Exception {
         logger.info("Попытка регистрации пользователя: {}", username);
 
@@ -66,13 +60,6 @@ public class UserService {
         }
     }
 
-    /**
-     * Аутентификация пользователя
-     * @param username имя пользователя
-     * @param password пароль
-     * @return пользователь если аутентификация успешна
-     * @throws Exception если неверные учетные данные
-     */
     public User authenticateUser(String username, String password) throws Exception {
         logger.info("Попытка аутентификации пользователя: {}", username);
 
@@ -91,11 +78,6 @@ public class UserService {
         return user;
     }
 
-    /**
-     * Получение всех обычных пользователей (не администраторов)
-     * @return список пользователей
-     * @throws SQLException ошибка БД
-     */
     public List<User> getAllNonAdminUsers() throws SQLException {
         logger.info("Запрос списка обычных пользователей");
         List<User> users = userDao.getAllNonAdminUsers();
@@ -103,12 +85,6 @@ public class UserService {
         return users;
     }
 
-    /**
-     * Удаление пользователя по ID
-     * @param userId ID пользователя
-     * @return true если удаление успешно
-     * @throws SQLException ошибка БД
-     */
     public boolean deleteUser(int userId) throws SQLException {
         logger.info("Попытка удаления пользователя с ID: {}", userId);
         boolean deleted = userDao.deleteUser(userId);
@@ -120,21 +96,10 @@ public class UserService {
         return deleted;
     }
 
-    /**
-     * Поиск пользователя по имени
-     * @param username имя пользователя
-     * @return пользователь или null
-     * @throws SQLException ошибка БД
-     */
     public User findByUsername(String username) throws SQLException {
         return userDao.findByUsername(username);
     }
 
-    /**
-     * Проверка существования администратора
-     * @return true если администратор существует
-     * @throws SQLException ошибка БД
-     */
     public boolean hasAdminExists() throws SQLException {
         return userDao.hasAdminExists();
     }

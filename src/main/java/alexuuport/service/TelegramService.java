@@ -31,7 +31,7 @@ public class TelegramService {
     }
 
     public void sendCode(String username, String code) {
-        String message = String.format("🔐 %s, ваш код подтверждения: %s", username, code);
+        String message = String.format("%s, ваш код подтверждения: %s", username, code);
         String url = String.format("%s?chat_id=%s&text=%s",
                 telegramApiUrl,
                 chatId,

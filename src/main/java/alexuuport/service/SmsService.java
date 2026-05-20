@@ -3,6 +3,7 @@ package alexuuport.service;
 import org.jsmpp.bean.*;
 import org.jsmpp.session.BindParameter;
 import org.jsmpp.session.SMPPSession;
+import org.jsmpp.session.SubmitSmResult;  // ← ВАЖНО: добавить этот импорт
 import alexuuport.util.LoggerUtil;
 
 import java.nio.charset.StandardCharsets;
@@ -33,13 +34,11 @@ public class SmsService {
     private Properties loadConfig() {
         Properties props = new Properties();
         try {
-            // Загружаем из файла, если он существует
             var inputStream = SmsService.class.getClassLoader().getResourceAsStream("sms.properties");
             if (inputStream != null) {
                 props.load(inputStream);
                 logger.debug("Конфигурация SMS загружена из файла sms.properties");
             } else {
-                // Используем значения по умолчанию
                 logger.warn("Файл sms.properties не найден, используются значения по умолчанию");
                 props.setProperty("smpp.host", "localhost");
                 props.setProperty("smpp.port", "2775");
@@ -54,11 +53,6 @@ public class SmsService {
         return props;
     }
 
-    /**
-     * Отправка SMS через эмулятор SMPP сервера
-     * @param phoneNumber номер телефона получателя
-     * @param code OTP код для отправки
-     */
     public void sendCode(String phoneNumber, String code) {
         logger.info("Попытка отправки SMS на номер {} с кодом {}", phoneNumber, code);
 
@@ -85,9 +79,8 @@ public class SmsService {
             String messageText = String.format("Ваш код подтверждения: %s. Код действителен 5 минут.", code);
             byte[] messageBytes = messageText.getBytes(StandardCharsets.UTF_8);
 
-            // Отправляем сообщение
-            /*
-            String messageId = session.submitShortMessage(
+            // Отправляем сообщение и ПОЛУЧАЕМ ОБЪЕКТ SubmitSmResult
+            SubmitSmResult submitSmResult = session.submitShortMessage(
                     systemType,                    // systemType
                     TypeOfNumber.UNKNOWN,          // sourceAddrTon
                     NumberingPlanIndicator.UNKNOWN, // sourceAddrNpi
@@ -106,10 +99,9 @@ public class SmsService {
                     (byte) 0,                      // smDefaultMsgId
                     messageBytes                   // shortMessage
             );
-             */
 
-            /* TODO: Код сверку тупит, установил заглушку */
-            String messageId = "Пу пу пу";
+            // ИЗВЛЕКАЕМ ID сообщения из результата
+            String messageId = submitSmResult.getMessageId();
 
             logger.success("SMS успешно отправлена на номер {}", phoneNumber);
             logger.debug("ID сообщения SMPP: {}", messageId);
@@ -133,13 +125,10 @@ public class SmsService {
         }
     }
 
-    /**
-     * Эмуляция отправки SMS для тестирования
-     */
     private void simulateSmsDelivery(String phoneNumber, String code) {
         String simulatedOutput = String.format(
                 "\n========================================\n" +
-                        "📱 ЭМУЛЯЦИЯ SMS ОТПРАВКИ\n" +
+                        "ЭМУЛЯЦИЯ SMS ОТПРАВКИ\n" +
                         "Кому: %s\n" +
                         "Код подтверждения: %s\n" +
                         "Сообщение: Ваш код подтверждения: %s. Код действителен 5 минут.\n" +
@@ -161,10 +150,6 @@ public class SmsService {
         }
     }
 
-    /**
-     * Проверка статуса SMS сервера
-     * @return true если сервер доступен
-     */
     public boolean checkSmsServerStatus() {
         SMPPSession session = new SMPPSession();
         try {

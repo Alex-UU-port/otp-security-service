@@ -143,67 +143,12 @@ public class  MainServer {
                         }
                         logger.success("База данных успешно инициализирована");
                     }
-                } else {
-                    logger.warn("Файл init.sql не найден, создаем таблицы вручную...");
-                    createTablesManually();
                 }
             } else {
                 logger.debug("Таблицы уже существуют, пропускаем инициализацию");
             }
         } catch (Exception e) {
             logger.error("Ошибка при инициализации базы данных", e);
-        }
-    }
-
-    private static void createTablesManually() throws Exception {
-        String createUsersTable = """
-            CREATE TABLE IF NOT EXISTS users (
-                id SERIAL PRIMARY KEY,
-                username VARCHAR(100) UNIQUE NOT NULL,
-                password_hash VARCHAR(255) NOT NULL,
-                role VARCHAR(20) NOT NULL,
-                email VARCHAR(255),
-                phone VARCHAR(20),
-                telegram_id VARCHAR(100),
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        """;
-
-        String createOtpConfigTable = """
-            CREATE TABLE IF NOT EXISTS otp_config (
-                id SERIAL PRIMARY KEY,
-                code_length INT DEFAULT 6,
-                ttl_seconds INT DEFAULT 300,
-                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        """;
-
-        String createOtpCodesTable = """
-            CREATE TABLE IF NOT EXISTS otp_codes (
-                id SERIAL PRIMARY KEY,
-                operation_id VARCHAR(100) NOT NULL,
-                user_id INT REFERENCES users(id),
-                code VARCHAR(10) NOT NULL,
-                status VARCHAR(20) DEFAULT 'ACTIVE',
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                expires_at TIMESTAMP NOT NULL,
-                channel VARCHAR(20),
-                destination VARCHAR(255)
-            )
-        """;
-
-        String insertDefaultConfig = """
-            INSERT INTO otp_config (code_length, ttl_seconds) 
-            SELECT 6, 300 
-            WHERE NOT EXISTS (SELECT 1 FROM otp_config)
-        """;
-
-        try (Statement stmt = connection.createStatement()) {
-            stmt.execute(createUsersTable);
-            stmt.execute(createOtpConfigTable);
-            stmt.execute(createOtpCodesTable);
-            stmt.execute(insertDefaultConfig);
-            logger.success("Таблицы созданы вручную");
         }
     }
 }
